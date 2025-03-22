@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Qubik.Hackathon.API.Data;
@@ -11,9 +12,11 @@ using Qubik.Hackathon.API.Data;
 namespace Qubik.Hackathon.API.Migrations
 {
     [DbContext(typeof(HackathonDbContext))]
-    partial class HackathonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250322151912_DatabaseCreatedAgain")]
+    partial class DatabaseCreatedAgain
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +43,10 @@ namespace Qubik.Hackathon.API.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ValidatorRecipientAddress")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -87,17 +94,14 @@ namespace Qubik.Hackathon.API.Migrations
                     b.Property<int>("CompanyId")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("PassDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<long>("ValidationAmount")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("ValidatorRecipientAddress")
+                    b.Property<string>("Passed")
                         .IsRequired()
                         .HasColumnType("text");
 

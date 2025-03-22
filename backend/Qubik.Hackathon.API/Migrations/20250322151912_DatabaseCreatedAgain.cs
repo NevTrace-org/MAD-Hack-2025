@@ -7,20 +7,25 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Qubik.Hackathon.API.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class DatabaseCreatedAgain : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "hackathon");
+
             migrationBuilder.CreateTable(
                 name: "Companies",
+                schema: "hackathon",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
-                    ImageUrl = table.Column<string>(type: "text", nullable: false)
+                    ImageUrl = table.Column<string>(type: "text", nullable: false),
+                    ValidatorRecipientAddress = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,30 +33,16 @@ namespace Qubik.Hackathon.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transactions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    From = table.Column<string>(type: "text", nullable: false),
-                    To = table.Column<string>(type: "text", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Investments",
+                schema: "hackathon",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
                     AddressFrom = table.Column<string>(type: "text", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Quantity = table.Column<int>(type: "integer", nullable: false),
-                    CompanyId = table.Column<int>(type: "integer", nullable: true)
+                    Quantity = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,6 +50,7 @@ namespace Qubik.Hackathon.API.Migrations
                     table.ForeignKey(
                         name: "FK_Investments_Companies_CompanyId",
                         column: x => x.CompanyId,
+                        principalSchema: "hackathon",
                         principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -66,14 +58,15 @@ namespace Qubik.Hackathon.API.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Milestones",
+                schema: "hackathon",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Passed = table.Column<string>(type: "text", nullable: false),
-                    CompanyId = table.Column<int>(type: "integer", nullable: true)
+                    Passed = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,6 +74,7 @@ namespace Qubik.Hackathon.API.Migrations
                     table.ForeignKey(
                         name: "FK_Milestones_Companies_CompanyId",
                         column: x => x.CompanyId,
+                        principalSchema: "hackathon",
                         principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -88,12 +82,13 @@ namespace Qubik.Hackathon.API.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Reports",
+                schema: "hackathon",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CompanyId = table.Column<int>(type: "integer", nullable: true)
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,6 +96,34 @@ namespace Qubik.Hackathon.API.Migrations
                     table.ForeignKey(
                         name: "FK_Reports_Companies_CompanyId",
                         column: x => x.CompanyId,
+                        principalSchema: "hackathon",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                schema: "hackathon",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CompanyId = table.Column<int>(type: "integer", nullable: false),
+                    TxId = table.Column<string>(type: "text", nullable: false),
+                    Tick = table.Column<long>(type: "bigint", nullable: false),
+                    From = table.Column<string>(type: "text", nullable: false),
+                    To = table.Column<string>(type: "text", nullable: false),
+                    Quantity = table.Column<long>(type: "bigint", nullable: true),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Transactions_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalSchema: "hackathon",
                         principalTable: "Companies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -108,17 +131,26 @@ namespace Qubik.Hackathon.API.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Investments_CompanyId",
+                schema: "hackathon",
                 table: "Investments",
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Milestones_CompanyId",
+                schema: "hackathon",
                 table: "Milestones",
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reports_CompanyId",
+                schema: "hackathon",
                 table: "Reports",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_CompanyId",
+                schema: "hackathon",
+                table: "Transactions",
                 column: "CompanyId");
         }
 
@@ -126,19 +158,24 @@ namespace Qubik.Hackathon.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Investments");
+                name: "Investments",
+                schema: "hackathon");
 
             migrationBuilder.DropTable(
-                name: "Milestones");
+                name: "Milestones",
+                schema: "hackathon");
 
             migrationBuilder.DropTable(
-                name: "Reports");
+                name: "Reports",
+                schema: "hackathon");
 
             migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "Transactions",
+                schema: "hackathon");
 
             migrationBuilder.DropTable(
-                name: "Companies");
+                name: "Companies",
+                schema: "hackathon");
         }
     }
 }

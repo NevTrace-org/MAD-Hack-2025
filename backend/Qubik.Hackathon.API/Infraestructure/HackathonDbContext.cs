@@ -10,9 +10,8 @@ namespace Qubik.Hackathon.API.Data
         public HackathonDbContext(DbContextOptions<HackathonDbContext> options)
             : base(options)
         {
-            
         }
-
+        
         public DbSet<Investment> Investments { get; set; }
         public DbSet<Milestone> Milestones { get; set; }
         public DbSet<Report> Reports { get; set; }
@@ -21,6 +20,8 @@ namespace Qubik.Hackathon.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("hackathon");
+
             base.OnModelCreating(modelBuilder);
 
             // Relaciones entre Startup y otras entidades

@@ -275,3 +275,38 @@ backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.pdb
 backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.sourcelink.json
 backend/Qubik.Hackathon.API/obj/Debug/net8.0/ref/Qubik.Hackathon.API.dll
 backend/Qubik.Hackathon.API/obj/Debug/net8.0/refint/Qubik.Hackathon.API.dll
+
+
+# Ignorar carpetas de compilación dentro de backend
+/backend/bin/
+/backend/obj/
+
+# Ignorar configuraciones de build por defecto
+**/bin/
+**/obj/
+
+# Ignorar archivos de configuración sensibles
+/backend/appsettings.json
+/backend/appsettings.*.json
+
+# Ignorar configuraciones de usuario en Visual Studio
+*.user
+*.suo
+
+# Archivos generados por VS
+.vs/
+*.dbmdl
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Ignorar carpetas de publicación si las tienes
+/backend/publish/
+/backend/release/
+/backend/debug/
+
+# Ignorar archivos de Rider o VSCode (si usas)
+.idea/
+.vscode/
