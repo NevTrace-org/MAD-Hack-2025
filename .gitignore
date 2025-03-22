@@ -310,3 +310,4 @@ backend/Qubik.Hackathon.API/obj/Debug/net8.0/refint/Qubik.Hackathon.API.dll
 # Ignorar archivos de Rider o VSCode (si usas)
 .idea/
 .vscode/
+backend/Qubik.Hackathon.API/bin/Debug/net8.0/appsettings.json

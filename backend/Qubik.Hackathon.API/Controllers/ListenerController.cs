@@ -16,19 +16,14 @@ namespace Qubik.Hackathon.API.Controllers
 
             Context = context;
         }
-        [HttpGet]
-        public async Task<IActionResult> Task()
-        {
-            return Ok("Ok");
-        }
 
         [HttpPost("{address}")]
         public async Task<IActionResult> SaveTransactionsResponse([FromRoute] string address, [FromBody] GetTransactionsResponse transactionsData)
         {
+            var emailListenerResponse = new List<EmailListenerResponse>();
+
             try
             {
-
-
                 var company = Context.Companies
                                         .Include(company => company.Transactions)
                                         .Include(company => company.Milestones)
@@ -39,7 +34,7 @@ namespace Qubik.Hackathon.API.Controllers
                     foreach (var transfer in transaction.Transactions)
                     {
                         //If the transaction did not exist already
-                        if(company.Transactions.All(tx => tx.TxId != transfer.Transaction.TxId))
+                        if (company.Transactions.All(tx => tx.TxId != transfer.Transaction.TxId))
                         {
                             Context.Transactions.Add(new Models.Transaction(transfer.Transaction, transfer.Timestamp, company.Id));
                             //Check if this transaction validates any milestone
@@ -48,24 +43,43 @@ namespace Qubik.Hackathon.API.Controllers
                                         .FirstOrDefault(milestone =>
                                                 milestone.ValidatorRecipientAddress == transfer.Transaction.DestId
                                                 && milestone.ValidationAmount == transfer.Transaction.Amount);
-                            if (validatedMilestone != null)
+                            if (validatedMilestone != null && validatedMilestone.ValidatedAt.HasValue == false)
                             {
-                                validatedMilestone.PassDate = DateTime.UtcNow;
+                                validatedMilestone.ValidatedAt = DateTimeOffset.FromUnixTimeMilliseconds(transfer.Timestamp).UtcDateTime;
                                 Context.Milestones.Update(validatedMilestone);
+                                emailListenerResponse.Add(new EmailListenerResponse()
+                                {
+                                    To = company.InvestorEmailAddress,
+                                    Subject = $"Message from {company.Name}",
+                                    Text = $"The company {company.Name} has validated the milestone {validatedMilestone.Name}"
+                                });
                             }
+                            //Check if this transaction is an investment
+                            var investedMilestone = company.Milestones.FirstOrDefault(milestone => milestone.ValidationAmount == transfer.Transaction.Amount);
+                            if (transfer.Transaction.SourceId == company.InvestorIdentity && investedMilestone != null && investedMilestone.ReleaseDate.HasValue == false)
+                            {
+                                investedMilestone.AmountReleased = transfer.Transaction.Amount.Value;
+                                investedMilestone.ReleaseDate = DateTimeOffset.FromUnixTimeMilliseconds(transfer.Timestamp).UtcDateTime;
+                                emailListenerResponse.Add(new EmailListenerResponse()
+                                {
+                                    To = company.CeoEmailAddress,
+                                    Subject = "Message from your investor",
+                                    Text = $"Your investor has released the budget associated to the milestone {investedMilestone.Name}"
+                                });
+                            }
+
                         }
                     }
                 }
 
                 Context.SaveChanges();
-
             }
             catch (Exception ex)
             {
 
             }
 
-            return Ok("Ok");
+            return Ok(emailListenerResponse);
         }
     }
 }

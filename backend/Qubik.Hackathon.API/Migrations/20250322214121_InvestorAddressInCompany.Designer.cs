@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Qubik.Hackathon.API.Data;
@@ -11,9 +12,11 @@ using Qubik.Hackathon.API.Data;
 namespace Qubik.Hackathon.API.Migrations
 {
     [DbContext(typeof(HackathonDbContext))]
-    partial class HackathonDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250322214121_InvestorAddressInCompany")]
+    partial class InvestorAddressInCompany
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,19 +38,11 @@ namespace Qubik.Hackathon.API.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("CeoEmailAddress")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("InvestorEmailAddress")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("InvestorIdentity")
+                    b.Property<string>("InvestorAddress")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -60,6 +55,34 @@ namespace Qubik.Hackathon.API.Migrations
                     b.ToTable("Companies", "hackathon");
                 });
 
+            modelBuilder.Entity("Qubik.Hackathon.API.Models.Investment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AddressFrom")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Investments", "hackathon");
+                });
+
             modelBuilder.Entity("Qubik.Hackathon.API.Models.Milestone", b =>
                 {
                     b.Property<int>("Id")
@@ -68,9 +91,6 @@ namespace Qubik.Hackathon.API.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("AmountReleased")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("CompanyId")
                         .HasColumnType("integer");
 
@@ -78,10 +98,7 @@ namespace Qubik.Hackathon.API.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("ReleaseDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("ValidatedAt")
+                    b.Property<DateTime?>("PassDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<long>("ValidationAmount")
@@ -158,6 +175,15 @@ namespace Qubik.Hackathon.API.Migrations
                     b.ToTable("Transactions", "hackathon");
                 });
 
+            modelBuilder.Entity("Qubik.Hackathon.API.Models.Investment", b =>
+                {
+                    b.HasOne("Qubik.Hackathon.API.Models.Company", null)
+                        .WithMany("Investments")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Qubik.Hackathon.API.Models.Milestone", b =>
                 {
                     b.HasOne("Qubik.Hackathon.API.Models.Company", null)
@@ -187,6 +213,8 @@ namespace Qubik.Hackathon.API.Migrations
 
             modelBuilder.Entity("Qubik.Hackathon.API.Models.Company", b =>
                 {
+                    b.Navigation("Investments");
+
                     b.Navigation("Milestones");
 
                     b.Navigation("Reports");

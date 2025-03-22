@@ -12,7 +12,6 @@ namespace Qubik.Hackathon.API.Data
         {
         }
         
-        public DbSet<Investment> Investments { get; set; }
         public DbSet<Milestone> Milestones { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -33,12 +32,7 @@ namespace Qubik.Hackathon.API.Data
             modelBuilder.Entity<Company>()
                 .HasMany(s => s.Milestones)
                 .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Company>()
-                .HasMany(s => s.Investments)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Cascade);            
         }
     }
 }
