@@ -263,3 +263,15 @@ __pycache__/
 # Application settings
 appsettings*.json
 /backend/Qubik.Hackathon.API/appsettings.json
+backend/Qubik.Hackathon.API/bin/Debug/net8.0/appsettings.json
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/apphost.exe
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.AssemblyInfo.cs
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.AssemblyInfoInputs.cache
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.csproj.CoreCompileInputs.cache
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.csproj.FileListAbsolute.txt
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.dll
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.genruntimeconfig.cache
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.pdb
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/Qubik.Hackathon.API.sourcelink.json
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/ref/Qubik.Hackathon.API.dll
+backend/Qubik.Hackathon.API/obj/Debug/net8.0/refint/Qubik.Hackathon.API.dll
