@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Qubik.Hackathon.API.props" />
+</Project>

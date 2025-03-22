@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Desarrollo\\Loiband\\Qubik.Hackathon\\Qubik.Hackathon.API\\Qubik.Hackathon.API.csproj": {}
+    "C:\\Desarrollo\\Hackathon\\QUBIC 2025\\MAD-Hack-2025\\backend\\Qubik.Hackathon.API\\Qubik.Hackathon.API.csproj": {}
   },
   "projects": {
-    "C:\\Desarrollo\\Loiband\\Qubik.Hackathon\\Qubik.Hackathon.API\\Qubik.Hackathon.API.csproj": {
+    "C:\\Desarrollo\\Hackathon\\QUBIC 2025\\MAD-Hack-2025\\backend\\Qubik.Hackathon.API\\Qubik.Hackathon.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Desarrollo\\Loiband\\Qubik.Hackathon\\Qubik.Hackathon.API\\Qubik.Hackathon.API.csproj",
+        "projectUniqueName": "C:\\Desarrollo\\Hackathon\\QUBIC 2025\\MAD-Hack-2025\\backend\\Qubik.Hackathon.API\\Qubik.Hackathon.API.csproj",
         "projectName": "Qubik.Hackathon.API",
-        "projectPath": "C:\\Desarrollo\\Loiband\\Qubik.Hackathon\\Qubik.Hackathon.API\\Qubik.Hackathon.API.csproj",
+        "projectPath": "C:\\Desarrollo\\Hackathon\\QUBIC 2025\\MAD-Hack-2025\\backend\\Qubik.Hackathon.API\\Qubik.Hackathon.API.csproj",
         "packagesPath": "C:\\Users\\jesus\\.nuget\\packages\\",
-        "outputPath": "C:\\Desarrollo\\Loiband\\Qubik.Hackathon\\Qubik.Hackathon.API\\obj\\",
+        "outputPath": "C:\\Desarrollo\\Hackathon\\QUBIC 2025\\MAD-Hack-2025\\backend\\Qubik.Hackathon.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
