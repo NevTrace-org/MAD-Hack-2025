@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Qubik.Hackathon.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2809c684a27ac54c457c3dfdc96bbdf112198a42")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6ba2440fe89639e4daf8a6218cf380d93f92117")]
 [assembly: System.Reflection.AssemblyProductAttribute("Qubik.Hackathon.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Qubik.Hackathon.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
