@@ -18,8 +18,6 @@ export const useDataStore = defineStore("dataStore", () => {
             )
         );
 
-        console.log(data);
-
         // Sort milestones by id for each startup
         const processedData = data.map((startup) => {
             if (startup.milestones && Array.isArray(startup.milestones)) {

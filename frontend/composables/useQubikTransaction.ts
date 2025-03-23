@@ -22,11 +22,6 @@ export const useQubikTransaction = () => {
         destinationId: string,
         amount: number
     ): Promise<TransactionResult | undefined> => {
-        console.log("Source ID:", sourceId);
-        console.log("Source Seed:", sourceSeed);
-        console.log("Destination ID:", destinationId);
-        console.log("Amount:", amount);
-
         const rpcStatus = await getRPCStatus();
         const currentTick = rpcStatus.tickInfo.tick;
 
@@ -42,23 +37,14 @@ export const useQubikTransaction = () => {
             .setAmount(amount)
             .setTick(targetTick);
 
-        console.log("Building transaction...", tx);
-
         await tx.build(sourceSeed);
-
-        console.log("Transaction built.", tx);
 
         const response = await broadcastTransaction(tx);
         const responseData = await response.json();
 
         if (!response.ok) {
-            console.log("Failed to broadcast transaction: ", responseData);
-            return;
+            throw new Error("Failed to broadcast transaction");
         }
-
-        console.log("Successfully broadcast transaction.", responseData);
-        console.log("Transaction ID: " + responseData.transactionId);
-        console.log("Scheduled for tick: " + targetTick);
 
         return {
             transactionId: responseData.transactionId,
@@ -89,16 +75,12 @@ export const useQubikTransaction = () => {
         const res = await fetch(`${_baseURL}/v1/balances/${identity}`);
         const data = await res.json();
 
-        console.log("Balance:", data);
-
         return data.balance;
     };
 
     const getRPCStatus = async (): Promise<RPCStatus> => {
         const res = await fetch(`${_baseURL}/v1/tick-info`);
         const data = await res.json();
-
-        console.log(data);
 
         return data;
     };
