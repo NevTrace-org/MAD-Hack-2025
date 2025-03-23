@@ -311,3 +311,28 @@ backend/Qubik.Hackathon.API/obj/Debug/net8.0/refint/Qubik.Hackathon.API.dll
 .idea/
 .vscode/
 backend/Qubik.Hackathon.API/bin/Debug/net8.0/appsettings.json
+
+# Nuxt dev/build outputs
+/frontend/.output
+/frontend/.data
+/frontend/.nuxt
+/frontend/.nitro
+/frontend/.cache
+/frontend/dist
+
+# Node dependencies
+/frontend/node_modules
+
+# Logs
+/frontend/logs
+/frontend/*.log
+
+# Misc
+/frontend/.DS_Store
+/frontend/.fleet
+/frontend/.idea
+
+# Local env files
+/frontend/.env
+/frontend/.env.*
+/frontend/!.env.example
