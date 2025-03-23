@@ -22,4 +22,10 @@ This project was built as part of a hackathon challenge to demonstrate the integ
 
 ---
 
+Landing page:
+
+https://quiet-structure-252786.framer.app/
+
+---
+
 Feel free to explore each folder for more details on the implementation.
