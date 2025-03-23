@@ -18,6 +18,16 @@ public class Startup
         services.AddDbContext<HackathonDbContext>(opciones =>
                 opciones.UseNpgsql(Configuration["ConnectionStrings:Default"]));
 
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowEverything", policy =>
+            {
+                policy
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
         services.AddControllers();
     }
 
@@ -29,6 +39,8 @@ public class Startup
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseCors("AllowEverything");
+        
         app.UseHttpsRedirection();
 
         app.UseRouting();

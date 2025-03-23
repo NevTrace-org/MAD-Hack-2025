@@ -47,12 +47,7 @@ namespace Qubik.Hackathon.API.Controllers
                             {
                                 validatedMilestone.ValidatedAt = DateTimeOffset.FromUnixTimeMilliseconds(transfer.Timestamp).UtcDateTime;
                                 Context.Milestones.Update(validatedMilestone);
-                                emailListenerResponse.Add(new EmailListenerResponse()
-                                {
-                                    To = company.InvestorEmailAddress,
-                                    Subject = $"Message from {company.Name}",
-                                    Text = $"The company {company.Name} has validated the milestone {validatedMilestone.Name}"
-                                });
+                                emailListenerResponse.Add(EmailListenerResponse.MilestoneAchievedResponse(company, validatedMilestone));
                             }
                             //Check if this transaction is an investment
                             var investedMilestone = company.Milestones.FirstOrDefault(milestone => milestone.ValidationAmount == transfer.Transaction.Amount);
@@ -60,12 +55,7 @@ namespace Qubik.Hackathon.API.Controllers
                             {
                                 investedMilestone.AmountReleased = transfer.Transaction.Amount.Value;
                                 investedMilestone.ReleaseDate = DateTimeOffset.FromUnixTimeMilliseconds(transfer.Timestamp).UtcDateTime;
-                                emailListenerResponse.Add(new EmailListenerResponse()
-                                {
-                                    To = company.CeoEmailAddress,
-                                    Subject = "Message from your investor",
-                                    Text = $"Your investor has released the budget associated to the milestone {investedMilestone.Name}"
-                                });
+                                emailListenerResponse.Add(EmailListenerResponse.BudgetReleasedResponse(company, investedMilestone));
                             }
 
                         }
